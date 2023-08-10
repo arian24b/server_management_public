@@ -119,7 +119,7 @@ install_docker() {
 
 install_marzban_script() {
     FETCH_REPO="arian24b/server_management_public"
-    SCRIPT_URL="https://github.com/$FETCH_REPO/raw/master/marzban/install_marzban.sh"
+    SCRIPT_URL="https://raw.githubusercontent.com/$FETCH_REPO/main/marzban/marzban_installer.sh"
     colorized_echo blue "Installing marzban script"
     curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin /usr/local/bin/marzban
     colorized_echo green "marzban script installed successfully"
@@ -207,7 +207,7 @@ marzban_cli() {
 
 update_marzban_script() {
     FETCH_REPO="arian24b/server_management_public"
-    SCRIPT_URL="https://github.com/$FETCH_REPO/raw/master/marzban/install_marzban.sh"
+    SCRIPT_URL="https://raw.githubusercontent.com/$FETCH_REPO/main/marzban/marzban_installer.sh"
     colorized_echo blue "Updating marzban script"
     curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin /usr/local/bin/marzban
     colorized_echo green "marzban script updated successfully"
