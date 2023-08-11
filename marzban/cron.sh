@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 MARZBAN_PATH=/home/marzban
 XRAY_PATH=$MARZBAN_PATH/xray
