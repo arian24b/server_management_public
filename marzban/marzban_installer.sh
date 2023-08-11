@@ -8,6 +8,9 @@ fi
 APP_DIR="$INSTALL_DIR/$APP_NAME"
 DATA_DIR="$APP_DIR"
 COMPOSE_FILE="$APP_DIR/docker-compose.yml"
+FILES_URL_PREFIX="https://raw.githubusercontent.com/Gozargah/Marzban/master"
+FETCH_REPO="arian24b/server_management_public"
+SCRIPT_URL="https://raw.githubusercontent.com/$FETCH_REPO/main/marzban/marzban_installer.sh"
 
 
 colorized_echo() {
@@ -118,8 +121,6 @@ install_docker() {
 }
 
 install_marzban_script() {
-    FETCH_REPO="arian24b/server_management_public"
-    SCRIPT_URL="https://raw.githubusercontent.com/$FETCH_REPO/main/marzban/marzban_installer.sh"
     colorized_echo blue "Installing marzban script"
     curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin /usr/local/bin/marzban
     colorized_echo green "marzban script installed successfully"
@@ -127,10 +128,8 @@ install_marzban_script() {
 
 install_marzban() {
     # Fetch releases
-    FILES_URL_PREFIX="https://raw.githubusercontent.com/Gozargah/Marzban/master"
 
-    mkdir -p "$DATA_DIR"
-    mkdir -p "$APP_DIR"
+    mkdir -p "$DATA_DIR" "$APP_DIR"
 
     colorized_echo blue "Fetching compose file"
     curl -sL "$FILES_URL_PREFIX/docker-compose.yml" -o "$APP_DIR/docker-compose.yml"
@@ -140,8 +139,8 @@ install_marzban() {
     curl -sL "$FILES_URL_PREFIX/.env.example" -o "$APP_DIR/.env"
     sed -i 's/^# \(XRAY_JSON = .*\)$/\1/' "$APP_DIR/.env"
     sed -i 's/^# \(SQLALCHEMY_DATABASE_URL = .*\)$/\1/' "$APP_DIR/.env"
-    sed -i 's~\(XRAY_JSON = \).*~\1"/home/marzban/xray_config.json"~' "$APP_DIR/.env"
-    sed -i 's~\(SQLALCHEMY_DATABASE_URL = \).*~\1"sqlite:////home/marzban/db.sqlite3"~' "$APP_DIR/.env"
+    sed -i 's~\(XRAY_JSON = \).*~\1"/var/lib/marzban/xray_config.json"~' "$APP_DIR/.env"
+    sed -i 's~\(SQLALCHEMY_DATABASE_URL = \).*~\1"sqlite:////var/lib/marzban/db.sqlite3"~' "$APP_DIR/.env"
     colorized_echo green "File saved in $APP_DIR/.env"
 
     colorized_echo blue "Fetching xray config file"
@@ -206,8 +205,6 @@ marzban_cli() {
 }
 
 update_marzban_script() {
-    FETCH_REPO="arian24b/server_management_public"
-    SCRIPT_URL="https://raw.githubusercontent.com/$FETCH_REPO/main/marzban/marzban_installer.sh"
     colorized_echo blue "Updating marzban script"
     curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin /usr/local/bin/marzban
     colorized_echo green "marzban script updated successfully"
