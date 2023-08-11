@@ -137,7 +137,7 @@ install_marzban() {
     mkdir -p $MARZBAN_DIR $SCRIPTS_PATH $CERTS_PATH $XRAY_PATH $ASSETS_PATH $LOGS_PATH
 
     colorized_echo blue "Fetching compose file"
-    curl -sSkL "$FILES_URL_PREFIX/docker-compose.yml" -o $COMPOSE_FILE
+    curl -sSkL "$MARZBAN_URL/docker-compose.yml" -o $COMPOSE_FILE
     colorized_echo green "File saved in $COMPOSE_FILE"
 
     colorized_echo blue "Fetching .env file"
@@ -145,13 +145,13 @@ install_marzban() {
     colorized_echo green "File saved in $MARZBAN_DIR/.env"
 
     colorized_echo blue "Fetching xray config file"
-    curl -sSkL "$FILES_URL_PREFIX/xray_config.json" -o "$MARZBAN_DIR/xray_config.json"
-    colorized_echo green "File saved in $MARZBAN_DIR/xray_config.json"
+    curl -sSkL "$FILES_URL_PREFIX/xray_config.json" -o "$XRAY_PATH/xray_config.json"
+    colorized_echo green "File saved in $XRAY_PATH/xray_config.json"
 
     colorized_echo blue "Fetching and run assets.sh file"
     curl -sSkL "$MARZBAN_URL/assets.sh" -o "$SCRIPTS_PATH/assets.sh"
     bash "$SCRIPTS_PATH/assets.sh"
-    colorized_echo green "File saved in $MARZBAN_DIR/xray_config.json and run!"
+    colorized_echo green "File saved in $SCRIPTS_PATH/assets.sh and run!"
 
     colorized_echo green "Marzban's files downloaded successfully and directories created!"
 }
