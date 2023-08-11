@@ -5,12 +5,12 @@ INSTALL_DIR="/home"
 if [ -z "$APP_NAME" ]; then
     APP_NAME="marzban"
 fi
-APP_DIR="$INSTALL_DIR/$APP_NAME"
-DATA_DIR="$APP_DIR"
-COMPOSE_FILE="$APP_DIR/docker-compose.yml"
+MARZBAN_DIR="$INSTALL_DIR/$APP_NAME"
+COMPOSE_FILE="$MARZBAN_DIR/docker-compose.yml"
 FILES_URL_PREFIX="https://raw.githubusercontent.com/Gozargah/Marzban/master"
 FETCH_REPO="arian24b/server_management_public"
-SCRIPT_URL="https://raw.githubusercontent.com/$FETCH_REPO/main/marzban/marzban_installer.sh"
+MARZBAN_URL="https://raw.githubusercontent.com/$FETCH_REPO/main/marzban"
+SCRIPT_URL="$MARZBAN_URL/marzban_installer.sh"
 
 
 colorized_echo() {
@@ -129,23 +129,19 @@ install_marzban_script() {
 install_marzban() {
     # Fetch releases
 
-    mkdir -p "$DATA_DIR" "$APP_DIR"
+    mkdir -p "$MARZBAN_DIR"
 
     colorized_echo blue "Fetching compose file"
-    curl -sL "$FILES_URL_PREFIX/docker-compose.yml" -o "$APP_DIR/docker-compose.yml"
-    colorized_echo green "File saved in $APP_DIR/docker-compose.yml"
+    curl -sSkL "$FILES_URL_PREFIX/docker-compose.yml" -o "$MARZBAN_DIR/docker-compose.yml"
+    colorized_echo green "File saved in $MARZBAN_DIR/docker-compose.yml"
 
     colorized_echo blue "Fetching .env file"
-    curl -sL "$FILES_URL_PREFIX/.env.example" -o "$APP_DIR/.env"
-    sed -i 's/^# \(XRAY_JSON = .*\)$/\1/' "$APP_DIR/.env"
-    sed -i 's/^# \(SQLALCHEMY_DATABASE_URL = .*\)$/\1/' "$APP_DIR/.env"
-    sed -i 's~\(XRAY_JSON = \).*~\1"/var/lib/marzban/xray_config.json"~' "$APP_DIR/.env"
-    sed -i 's~\(SQLALCHEMY_DATABASE_URL = \).*~\1"sqlite:////var/lib/marzban/db.sqlite3"~' "$APP_DIR/.env"
-    colorized_echo green "File saved in $APP_DIR/.env"
+    curl -sSkL "$MARZBAN_URL/.env" -o "$MARZBAN_DIR/.env"
+    colorized_echo green "File saved in $MARZBAN_DIR/.env"
 
     colorized_echo blue "Fetching xray config file"
-    curl -sL "$FILES_URL_PREFIX/xray_config.json" -o "$DATA_DIR/xray_config.json"
-    colorized_echo green "File saved in $DATA_DIR/xray_config.json"
+    curl -sSkL "$FILES_URL_PREFIX/xray_config.json" -o "$MARZBAN_DIR/xray_config.json"
+    colorized_echo green "File saved in $MARZBAN_DIR/xray_config.json"
 
     colorized_echo green "Marzban's files downloaded successfully"
 }
@@ -158,9 +154,9 @@ uninstall_marzban_script() {
 }
 
 uninstall_marzban() {
-    if [ -d "$APP_DIR" ]; then
-        colorized_echo yellow "Removing directory: $APP_DIR"
-        rm -r "$APP_DIR"
+    if [ -d "$MARZBAN_DIR" ]; then
+        colorized_echo yellow "Removing directory: $MARZBAN_DIR"
+        rm -r "$MARZBAN_DIR"
     fi
 }
 
@@ -178,9 +174,9 @@ uninstall_marzban_docker_images() {
 }
 
 uninstall_marzban_data_files() {
-    if [ -d "$DATA_DIR" ]; then
-        colorized_echo yellow "Removing directory: $DATA_DIR"
-        rm -r "$DATA_DIR"
+    if [ -d "$MARZBAN_DIR" ]; then
+        colorized_echo yellow "Removing directory: $MARZBAN_DIR"
+        rm -r "$MARZBAN_DIR"
     fi
 }
 
@@ -215,7 +211,7 @@ update_marzban() {
 }
 
 is_marzban_installed() {
-    if [ -d $APP_DIR ]; then
+    if [ -d $MARZBAN_DIR ]; then
         return 0
     else
         return 1
@@ -234,7 +230,7 @@ install_command() {
     check_running_as_root
     # Check if marzban is already installed
     if is_marzban_installed; then
-        colorized_echo red "Marzban is already installed at $APP_DIR"
+        colorized_echo red "Marzban is already installed at $MARZBAN_DIR"
         read -p "Do you want to override the previous installation? (y/n) "
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             colorized_echo red "Aborted installation"
@@ -280,7 +276,7 @@ uninstall_command() {
     uninstall_marzban
     uninstall_marzban_docker_images
 
-    read -p "Do you want to remove Marzban's data files too ($DATA_DIR)? (y/n) "
+    read -p "Do you want to remove Marzban's data files too ($MARZBAN_DIR)? (y/n) "
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         colorized_echo green "Marzban uninstalled successfully"
     else
