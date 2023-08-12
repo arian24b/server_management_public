@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*-
+# Auther: ArianOmrani - https://github.com/arian24b/
+# git repository: https://github.com/arian24b/server_management_public
+
+iptables-restore /root/iptables-save.txt
