@@ -1,4 +1,4 @@
-#!/usr/bin/env bashsh
+#!/usr/bin/env bash
 # -*- coding: utf-8 -*-
 # Auther: ArianOmrani - https://github.com/arian24b/
 # git repository: https://github.com/arian24b/server_management_public
@@ -6,15 +6,18 @@
 set -e
 # set -x
 
+# Load Template
+source <(curl -SskL https://github.com/arian24b/server_management_public/raw/main/template.sh)
+
 clear
 
 # Change /etc/resolv.conf
 unlink /etc/resolv.conf \
 && ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf \
-&& curl -sSkL https://github.com/arian24b/server_management_public/raw/main/conf/resolv.conf -o /etc/resolv.conf
+&& $CURL https://github.com/arian24b/server_management_public/raw/main/conf/resolv.conf -o /etc/resolv.conf
 
 # Update /etc/sysctl.conf
-curl -sSkL https://github.com/arian24b/server_management_public/raw/main/conf/sysctl.conf -o /etc/sysctl.conf \
+$CURL https://github.com/arian24b/server_management_public/raw/main/conf/sysctl.conf -o /etc/sysctl.conf \
 && sysctl -p
 
 add-apt-repository ppa:deadsnakes/ppa -y
@@ -33,24 +36,19 @@ curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
 
 bash <(curl -sSL https://get.docker.com)
 
-
-curl -sSkL https://github.com/arian24b/server_management_public/raw/main/conf/dphys-swapfile -o /etc/dphys-swapfile \
+$CURL https://github.com/arian24b/server_management_public/raw/main/conf/dphys-swapfile -o /etc/dphys-swapfile \
 && dphys-swapfile setup
 && dphys-swapfile swapon
 
-
-sudo bash -c "$(curl -sL https://github.com/Gozargah/Marzban-scripts/raw/master/marzban.sh)" @ install
-
+bash -c "$(curl -sL https://github.com/Gozargah/Marzban-scripts/raw/master/marzban.sh)" @ install
 
 # Add ssh-key to root user
 mkdir /root/.ssh \
-&& if ! grep -m1 -qs 'Qjae3u7rMlK1oEOw' /root/.ssh/authorized_keys; then curl -sSkL https://github.com/arian24b.keys >> /root/.ssh/authorized_keys; fi
+&& if ! grep -m1 -qs 'Qjae3u7rMlK1oEOw' /root/.ssh/authorized_keys; then $CURL https://github.com/arian24b.keys >> /root/.ssh/authorized_keys; fi
 ssh-keygen -A
-
 
 # Generate tmp file
 fallocate -l 2G /home/.tempfilefordelete
-
 
 # enable rc.local
 touch /etc/rc.local \
@@ -61,3 +59,8 @@ EOF \
 && systemctl enable rc-local \
 && systemctl restart rc-local
 
+# Setup backup
+mkdir -p /home/arian/backup
+$CURL https://github.com/arian24b/telegrambotapi/raw/main/telegram-bot-api -o /home/arian/backup/telegram-bot-api
+$CURL https://github.com/arian24b/telegrambotapi/raw/main/start_bot.sh.example -o /home/arian/backup/start_bot.sh
+$CURL https://github.com/arian24b/server_management_public/raw/main/backup/backup_to_telegram.sh -o /home/arian/backup/backup_to_telegram.sh

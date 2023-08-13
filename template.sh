@@ -5,30 +5,33 @@ set -e
 #set -x
 #clear
 
-# Declare Paths, logs & Settings
-DATE=$(date +'%Y-%m-%d %H:%M:%S')
-WGET="wget --timeout=5 --tries=2 --no-check-certificate"
-CURL="curl --max-time 5 --silent"
+# Define date
+function Commands() {
+  DATE=$(date +'%Y-%m-%d %H:%M:%S')
+  WGET="wget --timeout=5 --tries=2 --no-check-certificate"
+  CURL="curl --max-time 5 --silent"
+}
 
+Commands;
 
 # Red Messages
 function Red_msg() {
   tput setaf 1
-  echo "[*] ----- $1"
+  echo "[$DATE] ----- $1"
   tput sgr0
 }
 
 # Green Messages
 function Green_msg() {
   tput setaf 2
-  echo "[*] ----- $1"
+  echo "[$DATE] ----- $1"
   tput sgr0
 }
 
 # Yellow Messages
 function Yellow_msg() {
   tput setaf 3
-  echo "[*] ----- $1"
+  echo "[$DATE] ----- $1"
   tput sgr0
 }
 
@@ -66,9 +69,3 @@ function CheckPythonVertion() {
     Abort "python vertion is older then 9";
   fi
 }
-
-
-# Declare Paths, logs & Settings
-DetectLinux; # $LINUX
-DetectLocation; # $country_code
-CheckPrivileges;
