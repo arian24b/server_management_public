@@ -7,7 +7,7 @@ set -e
 
 # Define date
 function Commands() {
-  DATE=$(date +'%Y-%m-%d %H:%M:%S')
+  DATE=$(date +'%Y-%m-%d_%H:%M:%S')
   WGET="wget --timeout=5 --tries=2 --no-check-certificate"
   CURL="curl --max-time 5 --silent"
 }

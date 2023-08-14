@@ -20,8 +20,8 @@ export IP=$(hostname -I)
 export HOSTNAME=$(hostname)
 
 # Send message
-send_message() {
-	curl -F chat_id="$TM_CHATID" -F text="$1" https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage 2>&1 /dev/null
+function send_message() {
+  curl -F chat_id="$TM_CHATID" -F text="$1" https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage 2>&1 /dev/null
 }
 
 # Chack TM_CHATID is number
