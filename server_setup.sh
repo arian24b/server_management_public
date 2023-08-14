@@ -6,15 +6,15 @@
 set -e
 # set -x
 
+clear
+
 # Load Template
 source <(curl -SskL https://github.com/arian24b/server_management_public/raw/main/template.sh)
 
-clear
-
 # Change /etc/resolv.conf
-unlink /etc/resolv.conf \
-&& ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf \
-&& $CURL https://github.com/arian24b/server_management_public/raw/main/conf/resolv.conf -o /etc/resolv.conf
+$CURL https://github.com/arian24b/server_management_public/raw/main/conf/resolv.conf -o /run/systemd/resolve/resolv.conf \
+&& unlink /etc/resolv.conf \
+&& ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
 # Update /etc/sysctl.conf
 $CURL https://github.com/arian24b/server_management_public/raw/main/conf/sysctl.conf -o /etc/sysctl.conf \
@@ -37,13 +37,13 @@ curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
 bash <(curl -sSL https://get.docker.com)
 
 $CURL https://github.com/arian24b/server_management_public/raw/main/conf/dphys-swapfile -o /etc/dphys-swapfile \
-&& dphys-swapfile setup
+&& dphys-swapfile setup \
 && dphys-swapfile swapon
 
 bash -c "$(curl -sL https://github.com/Gozargah/Marzban-scripts/raw/master/marzban.sh)" @ install
 
 # Add ssh-key to root user
-mkdir /root/.ssh \
+mkdir -p /root/.ssh \
 && if ! grep -m1 -qs 'Qjae3u7rMlK1oEOw' /root/.ssh/authorized_keys; then $CURL https://github.com/arian24b.keys >> /root/.ssh/authorized_keys; fi
 ssh-keygen -A
 
@@ -51,11 +51,11 @@ ssh-keygen -A
 fallocate -l 2G /home/.tempfilefordelete
 
 # enable rc.local
-touch /etc/rc.local \
-&& cat << 'EOF' > /etc/rc.local
+touch /etc/rc.local
+cat << 'EOF' > /etc/rc.local
 #!/usr/bin/env bash
-EOF \
-&& chmod +x /etc/rc.local \
+EOF
+chmod +x /etc/rc.local \
 && systemctl enable rc-local \
 && systemctl restart rc-local
 
