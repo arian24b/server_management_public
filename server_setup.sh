@@ -16,14 +16,14 @@ source <(curl -SskL $GIT_REPO/raw/main/template.sh)
 # Change /etc/resolv.conf
 RESOLVCONF=/etc/resolv.conf
 RESOLVCONF_SYSTEMD=/run/systemd/resolve/resolv.conf
-$CURL $GIT_REPO/raw/main/conf/resolv.conf -o $RESOLVCONF_SYSTEMD \
+curl -sSkL $GIT_REPO/raw/main/conf/resolv.conf -o $RESOLVCONF_SYSTEMD \
 && unlink $RESOLVCONF \
 && ln -s $RESOLVCONF_SYSTEMD $RESOLVCONF
 Green_msg "$RESOLVCONF changed!"
 
 # Update /etc/sysctl.conf
 SYSCTLCONF=/etc/sysctl.conf
-$CURL $GIT_REPO/raw/main/conf/sysctl.conf -o $SYSCTLCONF \
+curl -sSkL $GIT_REPO/raw/main/conf/sysctl.conf -o $SYSCTLCONF \
 && sysctl --ignore -p --quiet
 Green_msg "$SYSCTLCONF changed!"
 
@@ -47,7 +47,7 @@ apt-get --fix-broken --fix-missing --quiet --yes autoremove
 apt-get --fix-missing --quiet --yes clean
 apt-get --fix-missing --quiet --yes autoclean
 
-dpkg --configure
+dpkg --configure -a
 Green_msg "apt cleaned"
 
 # Update ca-certificates
@@ -61,17 +61,17 @@ tuned-adm verify
 Green_msg "tuned profile set to $TUNEDPROFILE"
 
 # Install pip for python3.11
-$CURL https://github.com/pypa/get-pip/raw/main/public/get-pip.py | python3.11
+curl -sSkL https://github.com/pypa/get-pip/raw/main/public/get-pip.py | python3.11
 
 # Config swap
-$CURL $GIT_REPO/raw/main/conf/dphys-swapfile -o /etc/dphys-swapfile \
+curl -sSkL $GIT_REPO/raw/main/conf/dphys-swapfile -o /etc/dphys-swapfile \
 && dphys-swapfile setup \
 && dphys-swapfile swapon
 Green_msg "swap created!"
 
 # Add ssh-key to root user
 mkdir -p /root/.ssh \
-&& if ! grep -m1 -qs 'Qjae3u7rMlK1oEOw' /root/.ssh/authorized_keys; then $CURL https://github.com/arian24b.keys >> /root/.ssh/authorized_keys; fi
+&& if ! grep -m1 -qs 'Qjae3u7rMlK1oEOw' /root/.ssh/authorized_keys; then curl -sSkL https://github.com/arian24b.keys >> /root/.ssh/authorized_keys; fi
 ssh-keygen -A
 Green_msg "ssh-key installed!"
 
@@ -94,7 +94,7 @@ Green_msg "$RCLOCAL installd!"
 # Setup backup
 BACKUPPATH=/home/arian/backup
 mkdir -p $BACKUPPATH
-$CURL https://github.com/arian24b/telegrambotapi/raw/main/telegram-bot-api -o $BACKUPPATH/telegram-bot-api
-$CURL https://github.com/arian24b/telegrambotapi/raw/main/start_bot.sh.example -o $BACKUPPATH/start_bot.sh
-$CURL $GIT_REPO/raw/main/backup/backup_to_telegram.sh -o $BACKUPPATH/backup_to_telegram.sh
+curl -sSkL https://github.com/arian24b/telegrambotapi/raw/main/telegram-bot-api -o $BACKUPPATH/telegram-bot-api
+curl -sSkL https://github.com/arian24b/telegrambotapi/raw/main/start_bot.sh.example -o $BACKUPPATH/start_bot.sh
+curl -sSkL $GIT_REPO/raw/main/backup/backup_to_telegram.sh -o $BACKUPPATH/backup_to_telegram.sh
 chmod +x $BACKUPPATH/telegram-bot-api
