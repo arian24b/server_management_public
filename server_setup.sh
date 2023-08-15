@@ -63,17 +63,11 @@ Green_msg "tuned profile set to $TUNEDPROFILE"
 # Install pip for python3.11
 $CURL https://github.com/pypa/get-pip/raw/main/public/get-pip.py | python3.11
 
-# Install docker
-bash <($CURL https://get.docker.com)
-
 # Config swap
 $CURL $GIT_REPO/raw/main/conf/dphys-swapfile -o /etc/dphys-swapfile \
 && dphys-swapfile setup \
 && dphys-swapfile swapon
 Green_msg "swap created!"
-
-# Install marzban
-bash -c "$($CURL https://raw.githubusercontent.com/arian24b/server_management_public/main/marzban/marzban_installer.sh)" @ install
 
 # Add ssh-key to root user
 mkdir -p /root/.ssh \

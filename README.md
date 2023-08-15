@@ -1,10 +1,13 @@
 # server_management_public
 
-
-# Installation guide
-
-Run the following command
+# Install marzban
 
 ```bash
-sudo bash -c "$(curl -sSkL https://raw.githubusercontent.com/arian24b/server_management_public/main/marzban/marzban_installer.sh)" @ install
+bash -c "$(curl -sSkL https://github.com/arian24b/server_management_public/raw/main/marzban/marzban_installer.sh)" @ install
+```
+
+# Install docker
+
+```bash
+bash <(curl -sSkL https://get.docker.com)
 ```
