@@ -51,10 +51,10 @@ for HOMEDIR in $(ls -1 $DIR_PATH); do
   curl -F chat_id="$TM_CHATID" -F caption="$CAPTION" -F parse_mode="HTML" -F document=@"$BACKUP_PATH" "http://127.0.0.1:5687/bot${TELEGRAM_TOKEN}/sendDocument" & >/dev/null 2>&1 # https://api.telegram.org/bot
   wait
 
-  rm -f $BACKUP_PATH
 done
 
 tmux kill-session -t telegram_bot_api_starter
+rm -rf $TMP_BACKUP_PATH
 
 END_TIME=$DATE
 
