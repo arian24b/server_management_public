@@ -6,10 +6,12 @@
 set -e
 # set -x
 
-# Load Template
-source <(curl -SskL https://github.com/arian24b/server_management_public/raw/main/template.sh)
-
 clear
+
+GIT_REPO=https://github.com/arian24b/server_management_public
+
+# Load Template
+source <(curl -SskL $GIT_REPO/raw/main/template.sh)
 
 # Declare Paths & Settings.
 DIR_PATH=/home
@@ -21,7 +23,7 @@ export HOSTNAME=$(hostname)
 
 # Send message
 function send_message() {
-  curl -F chat_id="$TM_CHATID" -F text="$1" https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage 2>&1 /dev/null
+  curl -F chat_id="$TM_CHATID" -F text="$1" "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" >/dev/null 2>&1
 }
 
 # Chack TM_CHATID is number
@@ -43,10 +45,10 @@ for HOMEDIR in $(ls -1 $DIR_PATH); do
   <code>$DATE</code>
   <code>$IP</code>"
 
-  echo "$HOMEDIR Backup $DATE" | zip -r1Tluz $BACKUP_PATH $PATHS & 2>&1 /dev/null
+  zip -r -q -T -y -9 $BACKUP_PATH $PATHS & >/dev/null 2>&1
   wait
 
-  curl -F chat_id="$TM_CHATID" -F caption="$CAPTION" -F parse_mode="HTML" -F document=@"$BACKUP_PATH" http://127.0.0.1:5687/bot${TELEGRAM_TOKEN}/sendDocument & >/dev/null 2>&1 # https://api.telegram.org/bot
+  curl -F chat_id="$TM_CHATID" -F caption="$CAPTION" -F parse_mode="HTML" -F document=@"$BACKUP_PATH" "http://127.0.0.1:5687/bot${TELEGRAM_TOKEN}/sendDocument" & >/dev/null 2>&1 # https://api.telegram.org/bot
   wait
 
   rm -f $BACKUP_PATH
