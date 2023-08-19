@@ -1,0 +1,469 @@
+{
+    "log": {
+        "access": "/var/lib/marzban/log/xray/access.log",
+        "error": "/var/lib/marzban/log/xray/error.log",
+        "loglevel": "warning",
+        "dnsLog": true
+    },
+    "dns": {
+        "servers": [
+            "https://dns.adguard-dns.com/dns-query",
+            "94.140.14.14",
+            "94.140.15.15",
+            "2a10:50c0::ad1:ff",
+            "2a10:50c0::ad2:ff"
+        ],
+        "clientIp": "65.109.10.169",
+        "queryStrategy": "UseIP",
+        "disableCache": true,
+        "disableFallback": false,
+        "disableFallbackIfMatch": false
+    },
+    "inbounds": [
+        //{
+        //    "tag": "VMESS_WS_INBOUND",
+        //    "listen": "0.0.0.0",
+        //    "port": 2052,
+        //    "protocol": "vmess",
+        //    "settings": {
+        //        "clients": []
+        //    },
+        //    "streamSettings": {
+        //        "network": "ws",
+        //        "wsSettings": {
+        //            "path": "/"
+        //        }
+        //        //,
+        //        //"security": "tls",
+        //        //"tlsSettings": {
+        //        //    "serverName": "nsir.webdns.space",
+        //        //    "certificates": [
+        //        //        {
+        //        //            "ocspStapling": 3600,
+        //        //            "certificateFile": "/var/lib/marzban/certs/fullchain.pem",
+        //        //            "keyFile": "/var/lib/marzban/certs/key.pem"
+        //        //        }
+        //        //    ],
+        //        //    "minVersion": "1.2",
+        //        //    "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+        //        //}
+        //    },
+        //    "sniffing": {
+        //        "enabled": true,
+        //        "destOverride": [
+        //            "http",
+        //            "tls",
+        //            "quic",
+        //            "fakedns",
+        //            "fakedns+others"
+        //        ]
+        //    }
+        //},
+        {
+            "tag": "VMESS_gRPc_INBOUND",
+            "listen": "0.0.0.0",
+            "port": 2053,
+            "protocol": "vmess",
+            "settings": {
+                "clients": []
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "grpcSettings": {
+                    "serviceName": "/"
+                },
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "nsir.webdns.space",
+                    "certificates": [
+                        {
+                            "ocspStapling": 3600,
+                            "certificateFile": "/var/lib/marzban/certs/fullchain.pem",
+                            "keyFile": "/var/lib/marzban/certs/key.pem"
+                        }
+                    ],
+                    "minVersion": "1.2",
+                    "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic",
+                    "fakedns",
+                    "fakedns+others"
+                ]
+            }
+        },
+        //{
+        //    "tag": "VMESS_TCP_INBOUND",
+        //    "listen": "0.0.0.0",
+        //    "port": 8448,
+        //    "protocol": "vmess",
+        //    "settings": {
+        //        "clients": []
+        //    },
+        //    "streamSettings": {
+        //        "network": "tcp",
+        //        "security": "tls",
+        //        "tlsSettings": {
+        //            "serverName": "nsir.webdns.space",
+        //            "certificates": [
+        //                {
+        //                    "ocspStapling": 3600,
+        //                    "certificateFile": "/var/lib/marzban/certs/fullchain.pem",
+        //                    "keyFile": "/var/lib/marzban/certs/key.pem"
+        //                }
+        //            ],
+        //            "minVersion": "1.2",
+        //            "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+        //        }
+        //    },
+        //    "sniffing": {
+        //        "enabled": true,
+        //        "destOverride": [
+        //            "http",
+        //            "tls",
+        //            "quic",
+        //            "fakedns",
+        //            "fakedns+others"
+        //        ]
+        //    }
+        //},
+        //{
+        //    "tag": "VLESS_WS_INBOUND",
+        //    "listen": "0.0.0.0",
+        //    "port": 2095,
+        //    "protocol": "vless",
+        //    "settings": {
+        //        "clients": [],
+        //        "decryption": "none"
+        //    },
+        //    "streamSettings": {
+        //        "network": "ws",
+        //        "wsSettings": {
+        //            "path": "/"
+        //        }
+        //        //,
+        //        //"security": "tls",
+        //        //"tlsSettings": {
+        //        //    "serverName": "nsir.webdns.space",
+        //        //    "certificates": [
+        //        //        {
+        //        //            "ocspStapling": 3600,
+        //        //            "certificateFile": "/var/lib/marzban/certs/fullchain.pem",
+        //        //            "keyFile": "/var/lib/marzban/certs/key.pem"
+        //        //        }
+        //        //    ],
+        //        //    "minVersion": "1.2",
+        //        //    "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+        //        //}
+        //    },
+        //    "sniffing": {
+        //        "enabled": true,
+        //        "destOverride": [
+        //            "http",
+        //            "tls",
+        //            "quic",
+        //            "fakedns",
+        //            "fakedns+others"
+        //        ]
+        //    }
+        //},
+        //{
+        //    "tag": "VLESS_gRPC_INBOUND",
+        //    "listen": "0.0.0.0",
+        //    "port": 8880,
+        //    "protocol": "vless",
+        //    "settings": {
+        //        "clients": [],
+        //        "decryption": "none"
+        //    },
+        //    "streamSettings": {
+        //        "network": "grpc",
+        //        "grpcSettings": {
+        //            "serviceName": "/"
+        //        }
+        //        //,
+        //        //"security": "tls",
+        //        //"tlsSettings": {
+        //        //    "serverName": "nsir.webdns.space",
+        //        //    "certificates": [
+        //        //        {
+        //        //            "ocspStapling": 3600,
+        //        //            "certificateFile": "/var/lib/marzban/certs/fullchain.pem",
+        //        //            "keyFile": "/var/lib/marzban/certs/key.pem"
+        //        //        }
+        //        //    ],
+        //        //    "minVersion": "1.2",
+        //        //    "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+        //        //}
+        //    },
+        //    "sniffing": {
+        //        "enabled": true,
+        //        "destOverride": [
+        //            "http",
+        //            "tls",
+        //            "quic",
+        //            "fakedns",
+        //            "fakedns+others"
+        //        ]
+        //    }
+        //},
+        //{
+        //    "tag": "VLESS_TCP_INBOUND",
+        //    "listen": "0.0.0.0",
+        //    "port": 2086,
+        //    "protocol": "vless",
+        //    "settings": {
+        //        "clients": [],
+        //        "decryption": "none"
+        //    },
+        //    "streamSettings": {
+        //        "network": "tcp"
+        //        //,
+        //        //"security": "tls",
+        //        //"tlsSettings": {
+        //        //    "serverName": "nsir.webdns.space",
+        //        //    "certificates": [
+        //        //        {
+        //        //            "ocspStapling": 3600,
+        //        //            "certificateFile": "/var/lib/marzban/certs/fullchain.pem",
+        //        //            "keyFile": "/var/lib/marzban/certs/key.pem"
+        //        //        }
+        //        //    ],
+        //        //    "minVersion": "1.2",
+        //        //    "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+        //        //}
+        //    },
+        //    "sniffing": {
+        //        "enabled": true,
+        //        "destOverride": [
+        //            "http",
+        //            "tls",
+        //            "quic",
+        //            "fakedns",
+        //            "fakedns+others"
+        //        ]
+        //    }
+        //},
+        //{
+        //    "tag": "TROJAN_WS_INBOUND",
+        //    "listen": "0.0.0.0",
+        //    "port": 2087,
+        //    "protocol": "trojan",
+        //    "settings": {
+        //        "clients": []
+        //    },
+        //    "streamSettings": {
+        //        "network": "ws",
+        //        "wsSettings": {
+        //            "path": "/"
+        //        },
+        //        "security": "tls",
+        //        "tlsSettings": {
+        //            "serverName": "nsir.webdns.space",
+        //            "certificates": [
+        //                {
+        //                    "ocspStapling": 3600,
+        //                    "certificateFile": "/var/lib/marzban/certs/fullchain.pem",
+        //                    "keyFile": "/var/lib/marzban/certs/key.pem"
+        //                }
+        //            ],
+        //            "minVersion": "1.2",
+        //            "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+        //        }
+        //    },
+        //    "sniffing": {
+        //        "enabled": true,
+        //        "destOverride": [
+        //            "http",
+        //            "tls",
+        //            "quic",
+        //            "fakedns",
+        //            "fakedns+others"
+        //        ]
+        //    }
+        //},
+        {
+            "tag": "TROJAN_gRPC_INBOUND",
+            "listen": "0.0.0.0",
+            "port": 2082,
+            "protocol": "trojan",
+            "settings": {
+                "clients": []
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "grpcSettings": {
+                    "serviceName": "/"
+                }
+                //,
+                //"security": "tls",
+                //"tlsSettings": {
+                //    "serverName": "nsir.webdns.space",
+                //    "certificates": [
+                //        {
+                //            "ocspStapling": 3600,
+                //            "certificateFile": "/var/lib/marzban/certs/fullchain.pem",
+                //            "keyFile": "/var/lib/marzban/certs/key.pem"
+                //        }
+                //    ],
+                //    "minVersion": "1.2",
+                //    "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+                //}
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic",
+                    "fakedns",
+                    "fakedns+others"
+                ]
+            }
+        },
+        {
+            "tag": "TROJAN_TCP_INBOUND",
+            "listen": "0.0.0.0",
+            "port": 2083,
+            "protocol": "trojan",
+            "settings": {
+                "clients": []
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "nsir.webdns.space",
+                    "certificates": [
+                        {
+                            "ocspStapling": 3600,
+                            "certificateFile": "/var/lib/marzban/certs/fullchain.pem",
+                            "keyFile": "/var/lib/marzban/certs/key.pem"
+                        }
+                    ],
+                    "minVersion": "1.2",
+                    "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic",
+                    "fakedns",
+                    "fakedns+others"
+                ]
+            }
+        },
+        {
+            "tag": "SHADOWSOCKS_INBOUND",
+            "listen": "0.0.0.0",
+            "port": 2096,
+            "protocol": "shadowsocks",
+            "settings": {
+                "clients": [],
+                "network": "tcp,udp"
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "settings": {},
+            "tag": "DIRECT"
+        },
+        {
+            "protocol": "blackhole",
+            "settings": {},
+            "tag": "BLOCK"
+        },
+        {
+            "protocol": "wireguard",
+            "settings": {
+                "secretKey": "cKE7LmCF61IhqqABGhvJ44jWXp8fKymcMAEVAzbDF2k=",
+                "address": [
+                    "172.16.0.2/32",
+                    "2606:4700:110:8895:aeee:3c22:7600:740a/128"
+                ],
+                "peers": [
+                    {
+                        "publicKey": "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=",
+                        "endpoint": "engage.cloudflareclient.com:2408"
+                    }
+                ]
+            },
+            "tag": "WIREGUARD"
+        },
+        {
+            "tag": "DNS-Internal",
+            "protocol": "dns",
+            "settings": {
+                "address": "94.140.14.14",
+                "port": 53
+            }
+        }
+    ],
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "domainMatcher": "hybrid",
+        "rules": [
+            {
+                "ip": [
+                    "geoip:private"
+                ],
+                "outboundTag": "BLOCK",
+                "type": "field"
+            },
+            {
+                "domain": [
+                    "localhost",
+                    "geosite:private",
+                    "geosite:category-ads-all",
+                    "geosite:spotify-ads",
+                    "geosite:google-ads",
+                    "geosite:ookla-speedtest-ads"
+                ],
+                "outboundTag": "BLOCK",
+                "type": "field"
+            },
+            {
+                "protocol": [
+                    "bittorrent"
+                ],
+                "outboundTag": "BLOCK",
+                "type": "field"
+            },
+            {
+                "domain": [
+                    "ifconfig.io"
+                ],
+                "outboundTag": "DIRECT",
+                "type": "field"
+            },
+            {
+                "domain": [
+                    "geosite:spotify",
+                    "geosite:google",
+                    "geosite:soundcloud",
+                    "geosite:openai",
+                    "geosite:category-anticensorship",
+                    "geosite:category-dev"
+                ],
+                "outboundTag": "WIREGUARD",
+                "type": "field"
+            },
+            {
+                "type": "field",
+                "port": 53,
+                "network": "tcp,udp",
+                "outboundTag": "DNS-Internal"
+            }
+        ]
+    }
+}
