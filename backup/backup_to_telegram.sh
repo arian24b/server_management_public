@@ -16,8 +16,8 @@ source <(curl -SskL $GIT_REPO/raw/main/template.sh)
 # Declare Paths & Settings.
 DIR_PATH=/home
 TMP_BACKUP_PATH=$(mktemp -d)
-TELEGRAM_TOKEN=""
-TM_CHATID=""
+TELEGRAM_TOKEN="6048859556:AAF-IPNF9kmZrJBqvPkz1_tSHv8KdJA8ud0"
+TM_CHATID="409804739"
 export IP=$(hostname -I)
 export HOSTNAME=$(hostname)
 
@@ -33,9 +33,9 @@ fi
 
 START_TIME=$DATE
 
-send_message "Start creating backup from $DIR_PATH $START_TIME"
+bash /home/arian/backup/run_bot_api.sh &
 
-tmux new-session -d -s "telegram_bot_api_starter" "cd /home/arian/backup/;bash start_bot.sh"
+send_message "Start creating backup from $DIR_PATH $START_TIME"
 
 for HOMEDIR in $(ls -1 $DIR_PATH); do
   BACKUP_PATH="$TMP_BACKUP_PATH/$HOMEDIR-Backup-$DATE.zip"
@@ -45,15 +45,12 @@ for HOMEDIR in $(ls -1 $DIR_PATH); do
   <code>$DATE</code>
   <code>$IP</code>"
 
-  zip -r -q -T -y -9 $BACKUP_PATH $PATHS & >/dev/null 2>&1
-  wait
+  zip -r -q -T -y -9 $BACKUP_PATH $PATHS >/dev/null 2>&1
 
-  curl -F chat_id="$TM_CHATID" -F caption="$CAPTION" -F parse_mode="HTML" -F document=@"$BACKUP_PATH" "http://127.0.0.1:5687/bot${TELEGRAM_TOKEN}/sendDocument" & >/dev/null 2>&1 # https://api.telegram.org/bot
-  wait
+  curl -F chat_id="$TM_CHATID" -F caption="$CAPTION" -F parse_mode="HTML" -F document=@"$BACKUP_PATH" "http://127.0.0.1:5687/bot${TELEGRAM_TOKEN}/sendDocument" >/dev/null 2>&1 # https://api.telegram.org/bot
 
 done
 
-tmux kill-session -t telegram_bot_api_starter
 rm -rf $TMP_BACKUP_PATH
 
 END_TIME=$DATE
