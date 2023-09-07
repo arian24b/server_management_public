@@ -16,7 +16,7 @@ source <(curl -SskL $GIT_REPO/raw/main/template.sh)
 # Declare Paths & Settings.
 DIR_PATH=/home
 TMP_BACKUP_PATH=$(mktemp -d)
-TELEGRAM_TOKEN="6048859556:AAF-IPNF9kmZrJBqvPkz1_tSHv8KdJA8ud0"
+TELEGRAM_TOKEN="0123456789:AAAAAAAAAAAAAAAAAAAAAAAAAA"
 TM_CHATID="409804739"
 export IP=$(hostname -I)
 export HOSTNAME=$(hostname)
