@@ -2,7 +2,7 @@
     "log": {
         "access": "/var/lib/marzban/log/xray/access.log",
         "error": "/var/lib/marzban/log/xray/error.log",
-        "loglevel": "warning",
+        "loglevel": "info",
         "dnsLog": true
     },
     "dns": {
@@ -437,13 +437,6 @@
                     "bittorrent"
                 ],
                 "outboundTag": "BLOCK",
-                "type": "field"
-            },
-            {
-                "domain": [
-                    "ifconfig.io"
-                ],
-                "outboundTag": "DIRECT",
                 "type": "field"
             },
             {
