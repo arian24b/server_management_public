@@ -16,6 +16,7 @@ FILES_URL_PREFIX="https://raw.githubusercontent.com/Gozargah/Marzban/master"
 FETCH_REPO="arian24b/server_management_public"
 MARZBAN_URL="https://raw.githubusercontent.com/$FETCH_REPO/main/marzban"
 SCRIPT_URL="$MARZBAN_URL/marzban_installer.sh"
+MARZBAN_BIN=/usr/local/bin/marzban
 
 
 colorized_echo() {
@@ -127,7 +128,7 @@ install_docker() {
 
 install_marzban_script() {
     colorized_echo blue "Installing marzban script"
-    curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin /usr/local/bin/marzban
+    curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin $MARZBAN_BIN
     colorized_echo green "marzban script installed successfully"
 }
 
@@ -157,9 +158,9 @@ install_marzban() {
 }
 
 uninstall_marzban_script() {
-    if [ -f "/usr/local/bin/marzban" ]; then
+    if [ -f "$MARZBAN_BIN" ]; then
         colorized_echo yellow "Removing marzban script"
-        rm "/usr/local/bin/marzban"
+        rm "$MARZBAN_BIN"
     fi
 }
 
@@ -212,7 +213,7 @@ marzban_cli() {
 
 update_marzban_script() {
     colorized_echo blue "Updating marzban script"
-    curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin /usr/local/bin/marzban
+    curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin $MARZBAN_BIN
     colorized_echo green "marzban script updated successfully"
 }
 
