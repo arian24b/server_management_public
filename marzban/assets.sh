@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-ASSETS_PATH=/home/marzban/xray/assets
+MARZBAN_PATH=/home/marzban
+ASSETS_PATH=$MARZBAN_PATH/xray/assets
 
 # Create directories
 mkdir -p $ASSETS_PATH
@@ -11,4 +12,4 @@ curl -sSkL https://github.com/v2fly/geoip/releases/latest/download/geoip.dat -o 
 curl -sSkL https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/iran.dat -o $ASSETS_PATH/iran.dat
 
 # Change owner
-chown root.docker $ASSETS_PATH -R
+chown root.docker $MARZBAN_PATH -R
