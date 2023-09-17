@@ -10,6 +10,7 @@ bash <(curl -sSkL https://github.com/arian24b/server_management_public/raw/main/
 
 ```bash
 bash -c "$(curl -sSkL https://github.com/arian24b/server_management_public/raw/main/marzban/marzban_installer.sh)" @ install
+marzban cli admin create --sudo
 ```
 
 # Install docker
