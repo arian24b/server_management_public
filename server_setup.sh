@@ -27,11 +27,6 @@ curl -sSkL $GIT_REPO/raw/main/conf/resolv.conf -o $RESOLVCONF_SYSTEMD \
 && ln -s $RESOLVCONF_SYSTEMD $RESOLVCONF
 Green_msg "$RESOLVCONF changed!"
 
-# Update /etc/sysctl.conf
-curl -sSkL $GIT_REPO/raw/main/conf/sysctl.conf -o $SYSCTLCONF \
-&& sysctl --ignore -p --quiet --quiet
-Green_msg "$SYSCTLCONF changed!"
-
 # Update and install packages
 add-apt-repository ppa:deadsnakes/ppa --yes >/dev/null 2>&1
 
@@ -64,6 +59,11 @@ systemctl restart tuned
 tuned-adm profile $TUNEDPROFILE
 tuned-adm verify || true
 Green_msg "tuned profile set to $TUNEDPROFILE"
+
+# Update /etc/sysctl.conf
+curl -sSkL $GIT_REPO/raw/main/conf/sysctl.conf -o $SYSCTLCONF \
+&& sysctl --ignore -p --quiet --quiet
+Green_msg "$SYSCTLCONF changed!"
 
 # Install pip for python3.11
 curl -sSkL https://github.com/pypa/get-pip/raw/main/public/get-pip.py | python3.11
