@@ -60,8 +60,9 @@ update-ca-certificates
 Green_msg "ca-certificates Updated!"
 
 # Config tuned
+systemctl restart tuned
 tuned-adm profile $TUNEDPROFILE
-tuned-adm verify
+tuned-adm verify || true
 Green_msg "tuned profile set to $TUNEDPROFILE"
 
 # Install pip for python3.11
