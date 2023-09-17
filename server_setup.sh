@@ -29,18 +29,18 @@ Green_msg "$RESOLVCONF changed!"
 
 # Update /etc/sysctl.conf
 curl -sSkL $GIT_REPO/raw/main/conf/sysctl.conf -o $SYSCTLCONF \
-&& sysctl --ignore -p --quiet
+&& sysctl --ignore -p --quiet --quiet
 Green_msg "$SYSCTLCONF changed!"
 
 # Update and install packages
-add-apt-repository ppa:deadsnakes/ppa --yes
+add-apt-repository ppa:deadsnakes/ppa --yes >/dev/null 2>&1
 
-apt-get update --fix-missing --quiet --yes
-apt-get upgrade --fix-broken --fix-missing --quiet --yes
-apt-get dist-upgrade --fix-broken --fix-missing --quiet --yes
+apt-get update --fix-missing --quiet --quiet --yes
+apt-get upgrade --fix-broken --fix-missing --quiet --quiet --yes
+apt-get dist-upgrade --fix-broken --fix-missing --quiet --quiet --yes
 Green_msg "System updated!"
 
-apt-get --fix-broken --fix-missing --quiet --yes install nload iotop htop atop axel curl \
+apt-get --fix-broken --fix-missing --quiet --quiet --yes install nload iotop htop atop axel curl \
 wget build-essential sudo git tmux screen nano ca-certificates gnupg lsb-release tree socat \
 moreutils dnsutils unzip perl iptables libio-socket-ssl-perl libcrypt-ssleay-perl \
 libnet-libidn-perl libio-socket-inet6-perl libsocket6-perl brotli net-tools tuned \
@@ -48,9 +48,9 @@ software-properties-common socat cron vim wget sendmail ipython3 python3 python3
 zstd zip python3-venv python3.11 python3.11-venv dphys-swapfile libc++-dev
 Green_msg "Packages are installed!"
 
-apt-get --fix-broken --fix-missing --quiet --yes autoremove
-apt-get --fix-missing --quiet --yes clean
-apt-get --fix-missing --quiet --yes autoclean
+apt-get --fix-broken --fix-missing --quiet --quiet --yes autoremove
+apt-get --fix-missing --quiet --quiet --yes clean
+apt-get --fix-missing --quiet --quiet --yes autoclean
 
 dpkg --configure -a
 Green_msg "apt cleaned"
