@@ -4,7 +4,7 @@ MARZBAN_PATH=/home/marzban
 ASSETS_PATH=$MARZBAN_PATH/xray/assets
 
 # Create directories
-mkdir -p $ASSETS_PATH
+mkdir -p $ASSETS_PATH $MARZBAN_PATH/templates/home $MARZBAN_PATH/templates/subscription
 
 # Download assets file
 curl -sSkL https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat -o $ASSETS_PATH/geosite.dat
