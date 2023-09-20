@@ -1,0 +1,12 @@
+[Unit]
+Description=Reverse TLS Tunnel
+
+[Service]
+Type=idle
+User=root
+WorkingDirectory=/home/marzban/rtt
+ExecStart=bash /home/marzban/rtt/start.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.targe
