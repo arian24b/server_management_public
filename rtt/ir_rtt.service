@@ -1,0 +1,12 @@
+[Unit]
+Description=Reverse TLS Tunnel
+
+[Service]
+Type=idle
+User=root
+WorkingDirectory=/home/marzban/rtt
+ExecStart=/home/marzban/rtt/RTT --iran --lport:port --add-port:443 --sni:sni --pool:6 --password:pass --terminate:24
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
