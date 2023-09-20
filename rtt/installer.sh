@@ -15,7 +15,7 @@ source <(curl -SskL $GIT_REPO/raw/main/template.sh)
 
 
 RTT_PATH=/home/marzban/rtt
-mkdir -P $RTT_PATH
+mkdir -p $RTT_PATH
 cd $RTT_PATH
 bash <(curl -sSkL https://raw.githubusercontent.com/radkesvat/ReverseTlsTunnel/master/install.sh)
 
