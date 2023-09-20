@@ -9,4 +9,4 @@ ExecStart=bash /home/marzban/rtt/start.sh
 Restart=always
 
 [Install]
-WantedBy=multi-user.targe
+WantedBy=multi-user.target
