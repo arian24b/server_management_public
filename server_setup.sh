@@ -35,6 +35,8 @@ apt-get upgrade --fix-broken --fix-missing --quiet --quiet --yes
 apt-get dist-upgrade --fix-broken --fix-missing --quiet --quiet --yes
 Green_msg "System updated!"
 
+apt-get remove --fix-broken --fix-missing --quiet --quiet --yes --autoremove snapd ufw
+
 apt-get --fix-broken --fix-missing --quiet --quiet --yes install nload iotop htop atop axel curl \
 wget build-essential sudo git tmux screen nano ca-certificates gnupg lsb-release tree socat \
 moreutils dnsutils unzip perl iptables libio-socket-ssl-perl libcrypt-ssleay-perl \
