@@ -15,12 +15,17 @@ source <(curl -SskL $GIT_REPO/raw/main/template.sh)
 
 
 RTT_PATH=/home/marzban/rtt
+SERVICE_PATH=/etc/systemd/system/rtt.service
 mkdir -p $RTT_PATH
 cd $RTT_PATH
 bash <(curl -sSkL https://raw.githubusercontent.com/radkesvat/ReverseTlsTunnel/master/install.sh)
 
 if [[ $1 == "ir" ]]; then
-    curl -sSkL https://github.com/arian24b/server_management_public/raw/main/rtt/ir_rtt.service -o /etc/systemd/system/rtt.service
+    curl -sSkL https://github.com/arian24b/server_management_public/raw/main/rtt/ir_rtt.service -o $SERVICE_PATH
 elif [[ $1 == "eu" ]]; then
-    curl -sSkL https://github.com/arian24b/server_management_public/raw/main/rtt/eu_rtt.service -o /etc/systemd/system/rtt.service
+    curl -sSkL https://github.com/arian24b/server_management_public/raw/main/rtt/eu_rtt.service -o $SERVICE_PATH
 fi
+
+editor $SERVICE_PATH
+
+systemctl daemon-reload

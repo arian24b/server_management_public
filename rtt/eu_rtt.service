@@ -5,7 +5,7 @@ Description=Reverse TLS Tunnel
 Type=idle
 User=root
 WorkingDirectory=/home/marzban/rtt
-ExecStart=/home/marzban/rtt/RTT --kharej --iran-ip:irip --iran-port:irport --toip:127.0.0.1 --toport:multiport --sni:sni --pool:6 --password:pass --terminate:24
+ExecStart=/home/marzban/rtt/RTT --kharej --iran-ip:irip --iran-port:irport --toip:127.0.0.1 --toport:multiport --sni:sni --pool:n --password:pass --terminate:24
 Restart=always
 
 [Install]
