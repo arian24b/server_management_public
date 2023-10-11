@@ -11,7 +11,7 @@ clear
 GIT_REPO=https://github.com/arian24b/server_management_public
 RESOLVCONF=/etc/resolv.conf
 RESOLVCONF_SYSTEMD=/run/systemd/resolve/resolv.conf
-SYSCTLCONF=/etc/sysctl.conf
+SYSCTLCONF=/etc/sysctl.d/99-sysctl.conf
 TUNEDPROFILE=network-latency
 TMPFILEDELETE=/home/.tempfilefordelete
 RCLOCAL=/etc/rc.local
@@ -124,3 +124,5 @@ EOF
 #
 echo 0 | update-alternatives --config editor
 echo 1 | select-editor
+
+touch /root/.Xauthority
