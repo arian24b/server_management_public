@@ -103,7 +103,7 @@ mkdir -p $BACKUPPATH
 curl -sSkL https://github.com/arian24b/telegrambotapi/raw/main/telegram-bot-api -o $BACKUPPATH/telegram-bot-api
 curl -sSkL https://github.com/arian24b/telegrambotapi/raw/main/run_bot_api.sh.example -o $BACKUPPATH/run_bot_api.sh
 curl -sSkL $GIT_REPO/raw/main/backup/backup_to_telegram.sh -o $BACKUPPATH/backup_to_telegram.sh
-chmod +x $BACKUPPATH/telegram-bot-api
+chmod +x $BACKUPPATH/telegram-bot-api $BACKUPPATH/run_bot_api.sh $BACKUPPATH/backup_to_telegram.sh
 
 #
 systemctl enable cron

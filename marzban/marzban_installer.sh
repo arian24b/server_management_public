@@ -151,6 +151,7 @@ install_marzban() {
 
     colorized_echo blue "Fetching and run assets.sh file"
     curl -sSkL "$MARZBAN_URL/assets.sh" -o "$SCRIPTS_PATH/assets.sh"
+    chmod +x "$SCRIPTS_PATH/assets.sh"
     bash "$SCRIPTS_PATH/assets.sh"
     colorized_echo green "File saved in $SCRIPTS_PATH/assets.sh and run!"
 
