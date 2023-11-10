@@ -51,3 +51,8 @@ systemctl daemon-reload \
 && systemctl start rtt.service \
 && systemctl enable rtt.service
 ```
+
+# Install acme.sh
+```bash
+curl -sSkL https://get.acme.sh | sh -s email=my@example.com
+```
