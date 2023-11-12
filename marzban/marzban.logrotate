@@ -1,0 +1,7 @@
+/home/marzban/xray/logs/*.log {
+  rotate 10
+  maxsize 100M
+  compress
+  missingok
+  notifempty
+}

@@ -155,6 +155,12 @@ install_marzban() {
     bash "$SCRIPTS_PATH/assets.sh"
     colorized_echo green "File saved in $SCRIPTS_PATH/assets.sh and run!"
 
+    colorized_echo blue "Fetching and install logrotate marzban file"
+    curl -sSkL "$MARZBAN_URL/marzban.logrotate" -o "/etc/logrotate.d/marzban"
+    chmod 644 "/etc/logrotate.d/marzban"
+    systemctl try-reload-or-restart logrotate
+    colorized_echo green "File saved in "/etc/logrotate.d/marzban"!"
+
     colorized_echo green "Marzban's files downloaded successfully and directories created!"
 }
 
