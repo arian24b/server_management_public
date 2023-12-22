@@ -67,8 +67,8 @@ curl -sSkL $GIT_REPO/raw/main/conf/sysctl.conf -o $SYSCTLCONF \
 && sysctl --ignore -p --quiet --quiet
 Green_msg "$SYSCTLCONF changed!"
 
-# Install pip for python3.11
-curl -sSkL https://github.com/pypa/get-pip/raw/main/public/get-pip.py | python3.11
+# Install pip for python3.12
+curl -sSkL https://github.com/pypa/get-pip/raw/main/public/get-pip.py | python3.12
 
 # Config swap
 curl -sSkL $GIT_REPO/raw/main/conf/dphys-swapfile -o /etc/dphys-swapfile \
