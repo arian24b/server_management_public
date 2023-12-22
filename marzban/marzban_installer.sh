@@ -142,7 +142,7 @@ install_marzban() {
     colorized_echo green "File saved in $COMPOSE_FILE"
 
     colorized_echo blue "Fetching .env file"
-    curl -sSkL "$MARZBAN_URL/.env" -o "$MARZBAN_DIR/.env"
+    curl -sSkL "$MARZBAN_URL/s.env" -o "$MARZBAN_DIR/.env"
     colorized_echo green "File saved in $MARZBAN_DIR/.env"
 
     colorized_echo blue "Fetching xray config file"
