@@ -129,3 +129,7 @@ touch /root/.Xauthority
 
 #
 ufw disable
+
+
+journalctl --vacuum-size=200M
+journalctl --vacuum-time=15d
