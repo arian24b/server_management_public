@@ -35,6 +35,11 @@ function Yellow_msg() {
   tput sgr0
 }
 
+# Normal Messages
+function Normal_msg() {
+  echo "[$DATE] ----- $1"
+}
+
 # Show an Error and Exit
 function Abort() {
   Red_msg "Please check log and run scripts with -x for Debug."
