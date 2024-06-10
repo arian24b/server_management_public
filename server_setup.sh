@@ -133,3 +133,7 @@ ufw disable
 
 journalctl --vacuum-size=200M
 journalctl --vacuum-time=15d
+
+#
+git config --global user.email "arian24b@gmail.com"
+git config --global user.name "arian"
