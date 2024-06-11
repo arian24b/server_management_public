@@ -137,3 +137,27 @@ journalctl --vacuum-time=15d
 #
 git config --global user.email "arian24b@gmail.com"
 git config --global user.name "arian"
+
+# Add shutdown script
+echo << EOF > /home/arian/shutdown-h
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*-
+# Auther: ArianOmrani - https://github.com/arian24b/
+# git repository: https://github.com/arian24b/server_management
+
+echo -e "\n\nWARNING:   THIS SYSTEM WILL BE SHUT DOWN IN ONE MINUTE! \n\n(execute 'killall sleep' to avoid shutdown)\n\n" | tee /dev/stderr | wall
+( sleep 60 && /sbin/halt -p ) &
+EOF
+
+echo << EOF > /usr/local/sbin/shutdown-h-now
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*-
+# Auther: ArianOmrani - https://github.com/arian24b/
+# git repository: https://github.com/arian24b/server_management
+
+echo -e "\n\nWARNING:   THIS SYSTEM WILL BE SHUT DOWN NOW! \n\n" | tee /dev/stderr | wall
+/sbin/halt -p
+EOF
+
+
+chmod +x /home/arian/shutdown-h-now.sh
