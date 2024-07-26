@@ -55,7 +55,7 @@ def run_telegram_bot_api() -> Tuple[Popen, str]:
         f'--api-hash={API_HASH}',
         f'--http-port={API_PORT}',
         f'--dir={TEMP_DIR}',
-        f'--temp-dir={TEMP_DIR}',
+        f'--temp-dir={TEMP_DIR}', API_PORT
         '--local'
     ]
 
@@ -215,7 +215,7 @@ def main() -> None:
             backup_path = path.join(tmp_backup_path, f"{homedir}-backup-{start_time}.zip")
             # Define the title and caption
             title = f"Backup: {path_to_backup}"
-            caption = f"{title}\n<code>{start_time}</code>\n<code>{HOSTNAME}:{IP}</code>"
+            caption = f"{title}\n<code>{start_time}</code>\n<code>{HOSTNAME}: {IP}</code>"
 
             # Create a zip archive of the specified path
             create_backup(path_to_backup, backup_path)
@@ -226,18 +226,18 @@ def main() -> None:
             # Remove the backup file
             remove(backup_path)
 
+    # End time
+    end_time = datetime.now().strftime('%Y-%m-%d-%H:%M:%S')
+
+    # Send a message that the backup process has completed
+    telegram_send_message(message=f"Backup from server {HOSTNAME}: {IP} from path: {DIR_PATH} in {start_time} to {end_time}.")
+
     # Kill the bot API process
     bot_api_process.kill()
 
     # Remove the temporary backup path
     rmtree(tmp_backup_path)
     rmtree(temp_dir)
-
-    # End time
-    end_time = datetime.now().strftime('%Y-%m-%d-%H:%M:%S')
-
-    # Send a message that the backup process has completed
-    telegram_send_message(message=f"Backup from server {HOSTNAME}: {IP} from path: {DIR_PATH} in {start_time} to {end_time}.")
 
 
 if __name__ == "__main__":
