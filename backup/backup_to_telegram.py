@@ -55,7 +55,7 @@ def run_telegram_bot_api() -> Tuple[Popen, str]:
         f'--api-hash={API_HASH}',
         f'--http-port={API_PORT}',
         f'--dir={TEMP_DIR}',
-        f'--temp-dir={TEMP_DIR}', API_PORT
+        f'--temp-dir={TEMP_DIR}',
         '--local'
     ]
 
