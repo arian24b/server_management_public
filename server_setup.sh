@@ -42,7 +42,7 @@ wget build-essential sudo git tmux screen nano ca-certificates gnupg lsb-release
 moreutils dnsutils unzip perl iptables libio-socket-ssl-perl libcrypt-ssleay-perl \
 libnet-libidn-perl libio-socket-inet6-perl libsocket6-perl brotli net-tools tuned \
 software-properties-common socat cron vim wget sendmail ipython3 python3 python3-pip \
-zstd zip python3-venv python3.12 python3.12-venv dphys-swapfile libc++-dev software-properties-common netcat whois
+zstd zip python3-venv python3.12 python3.12-venv dphys-swapfile libc++-dev software-properties-common netcat whois python3-full
 Green_msg "Packages are installed!"
 
 apt-get --fix-broken --fix-missing --quiet --quiet --yes autoremove
