@@ -16,7 +16,7 @@ from time import sleep
 
 # Declare Paths & Settings
 HOSTNAME = gethostname()
-IP=request(method="get", url="https://api.ipify.org").text if gethostbyname(HOSTNAME) in "127.0.0.1" else gethostbyname(HOSTNAME)
+IP = request(method="get", url="https://api.ipify.org").text if gethostbyname(HOSTNAME) in "127.0.0.1" else gethostbyname(HOSTNAME)
 DIR_PATH = "/home"
 TELEGRAM_BOT_TOKEN = ""
 TELEGRAM_CHAT_ID = ""
@@ -39,7 +39,7 @@ def run_telegram_bot_api() -> Tuple[Popen, str]:
         None
     """
     # Create a temporary directory
-    TEMP_DIR = mkdtemp(prefix=f"{TELEGRAM_BOT_API_BINARY_NAME}-")
+    tmp_dir = mkdtemp(prefix=f"{TELEGRAM_BOT_API_BINARY_NAME}-")
 
     # Kill all instances of the telegram-bot-api binary
     kill_args = [
@@ -55,8 +55,8 @@ def run_telegram_bot_api() -> Tuple[Popen, str]:
         f"--api-id={TELEGRAM_API_ID}",
         f"--api-hash={TELEGRAM_API_HASH}",
         f"--http-port={TELEGRAM_LOCAL_API_PORT}",
-        f"--dir={TEMP_DIR}",
-        f"--temp-dir={TEMP_DIR}",
+        f"--dir={tmp_dir}",
+        f"--temp-dir={tmp_dir}",
         "--local"
     ]
 
@@ -66,10 +66,10 @@ def run_telegram_bot_api() -> Tuple[Popen, str]:
         sleep(0.5)
     except Exception as e:
         # print(f"An error occurred: {e}")
-        rmtree(TEMP_DIR)  # Clean up if error occurs
+        rmtree(tmp_dir)  # Clean up if error occurs
         raise
 
-    return bot_api_process, TEMP_DIR
+    return bot_api_process, tmp_dir
 
 
 def telegram_send_message(message: str, chat_id: str = TELEGRAM_CHAT_ID) -> Response:
@@ -87,9 +87,11 @@ def telegram_send_message(message: str, chat_id: str = TELEGRAM_CHAT_ID) -> Resp
     The message is sent to the specified chat using the provided token and chat ID.
     The function returns the response object from the API call.
     """
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    payload = {"chat_id": chat_id, "text": message}
-    response = request(method="POST", url=url, data=payload)
+    response = request(
+        method="POST",
+        url=f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
+        data={"chat_id": chat_id, "text": message}
+    )
 
     return response
 
@@ -106,11 +108,16 @@ def telegram_send_file(file_path: str, caption: str, chat_id: str = TELEGRAM_CHA
     Returns:
         Response: The response object containing the result of the file sending request.
     """
-    with open(file_path, "rb") as file:
-        url = f"{TELEGRAM_LOCAL_API_URL}/bot{TELEGRAM_BOT_TOKEN}/sendDocument"
-        files = {"document": file}
-        payload = {"chat_id": chat_id, "caption": caption, "parse_mode": "HTML"}
-        response = request(method="POST", url=url, files=files, data=payload)
+    f = open(file_path, "rb")
+
+    response = request(
+        method="POST",
+        url=f"{TELEGRAM_LOCAL_API_URL}/bot{TELEGRAM_BOT_TOKEN}/sendDocument",
+        data={"chat_id": chat_id, "caption": caption, "parse_mode": "HTML"},
+        files={"document": f}
+    )
+
+    f.close()
 
     return response
 
@@ -156,15 +163,10 @@ def create_backup(path_to_backup: str, backup_path: str) -> None:
         - The function uses the ZipFile class from the zipfile module to create the zip file.
         - Each file in the filePaths list is written to the zip file using the write method of the ZipFile class.
     """
-    backup_path=backup_path if backup_path.endswith(".zip") else backup_path + ".zip"
+    backup_path = backup_path if backup_path.endswith(".zip") else backup_path + ".zip"
 
     # Call the function to retrieve all files and folders of the assigned directory
     filePaths = retrieve_file_paths(path_to_backup)
-
-    # print the list of files to be zipped
-    # print("The following list of files will be zipped:")
-    # for fileName in filePaths:
-    #     print(fileName)
 
     # write files and folders to a zipfile
     with ZipFile(backup_path, "w") as zfile:
@@ -185,7 +187,6 @@ def main() -> None:
 
     # Run the bot API in the background
     bot_api_process, temp_dir = run_telegram_bot_api()
-
 
     # Create a temporary backup path
     tmp_backup_path = mkdtemp(prefix="backup-")
@@ -211,7 +212,6 @@ def main() -> None:
 
     # End time
     end_time = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
-
 
     # Kill the bot API process
     bot_api_process.kill()
