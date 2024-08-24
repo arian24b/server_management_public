@@ -79,8 +79,20 @@ rm -f /swapfile \
 Green_msg "swap created!"
 
 # Add ssh-key to root user
-mkdir -p /root/.ssh \
-&& if ! grep -m1 -qs 'Qjae3u7rMlK1oEOw' /root/.ssh/authorized_keys; then curl -sSkL https://github.com/arian24b.keys >> /root/.ssh/authorized_keys; fi
+if test ! -e /root/.ssh; then
+    mkdir -p /root/.ssh
+    chmod 700 /root/.ssh
+fi;
+
+if test ! -e "/root/.ssh/authorized_keys"; then
+    touch "/root/.ssh/authorized_keys"
+    chmod 600 "/root/.ssh/authorized_keys"
+fi;
+
+if ! grep -m1 -qs 'Qjae3u7rMlK1oEOw' /root/.ssh/authorized_keys; then
+    curl -sSkL https://github.com/arian24b.keys >> /root/.ssh/authorized_keys;
+fi
+
 ssh-keygen -A
 Green_msg "ssh-key installed!"
 
