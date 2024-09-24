@@ -16,7 +16,11 @@ from time import sleep
 
 # Declare Paths & Settings
 HOSTNAME = gethostname()
-IP = request(method="get", url="https://api.ipify.org").text if gethostbyname(HOSTNAME) in "127.0.0.1" else gethostbyname(HOSTNAME)
+IP = (
+    request(method="get", url="https://api.ipify.org").text
+    if gethostbyname(HOSTNAME) in "127.0.0.1"
+    else gethostbyname(HOSTNAME)
+)
 DIR_PATH = "/home"
 TELEGRAM_BOT_TOKEN = ""
 TELEGRAM_CHAT_ID = ""
@@ -42,11 +46,7 @@ def run_telegram_bot_api() -> Tuple[Popen, str]:
     tmp_dir = mkdtemp(prefix=f"{TELEGRAM_BOT_API_BINARY_NAME}-")
 
     # Kill all instances of the telegram-bot-api binary
-    kill_args = [
-        "killall",
-        "-9",
-        TELEGRAM_BOT_API_BINARY_NAME
-    ]
+    kill_args = ["killall", "-9", TELEGRAM_BOT_API_BINARY_NAME]
     run(args=kill_args, stdout=DEVNULL, stderr=DEVNULL)
 
     # Arguments to pass to the telegram-bot-api binary
@@ -57,14 +57,14 @@ def run_telegram_bot_api() -> Tuple[Popen, str]:
         f"--http-port={TELEGRAM_LOCAL_API_PORT}",
         f"--dir={tmp_dir}",
         f"--temp-dir={tmp_dir}",
-        "--local"
+        "--local",
     ]
 
     # Execute the telegram-bot-api binary with the specified arguments
     try:
         bot_api_process = Popen(args=run_args, stdout=DEVNULL, stderr=DEVNULL)
         sleep(0.5)
-    except Exception as e:
+    except Exception:
         # print(f"An error occurred: {e}")
         rmtree(tmp_dir)  # Clean up if error occurs
         raise
@@ -90,13 +90,15 @@ def telegram_send_message(message: str, chat_id: str = TELEGRAM_CHAT_ID) -> Resp
     response = request(
         method="POST",
         url=f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
-        data={"chat_id": chat_id, "text": message}
+        data={"chat_id": chat_id, "text": message},
     )
 
     return response
 
 
-def telegram_send_file(file_path: str, caption: str, chat_id: str = TELEGRAM_CHAT_ID) -> Response:
+def telegram_send_file(
+    file_path: str, caption: str, chat_id: str = TELEGRAM_CHAT_ID
+) -> Response:
     """
     Sends a file to a Telegram chat using the specified file path, caption, and chat ID.
 
@@ -114,7 +116,7 @@ def telegram_send_file(file_path: str, caption: str, chat_id: str = TELEGRAM_CHA
         method="POST",
         url=f"{TELEGRAM_LOCAL_API_URL}/bot{TELEGRAM_BOT_TOKEN}/sendDocument",
         data={"chat_id": chat_id, "caption": caption, "parse_mode": "HTML"},
-        files={"document": f}
+        files={"document": f},
     )
 
     f.close()
@@ -196,10 +198,14 @@ def main() -> None:
         path_to_backup = path.join(DIR_PATH, homedir)
         if path.isdir(path_to_backup):
             # Define the backup path
-            backup_path = path.join(tmp_backup_path, f"{homedir}-backup-{start_time}.zip")
+            backup_path = path.join(
+                tmp_backup_path, f"{homedir}-backup-{start_time}.zip"
+            )
             # Define the title and caption
             title = f"Backup: {path_to_backup}"
-            caption = f"{title}\n<code>{start_time}</code>\n<code>{HOSTNAME}: {IP}</code>"
+            caption = (
+                f"{title}\n<code>{start_time}</code>\n<code>{HOSTNAME}: {IP}</code>"
+            )
 
             # Create a zip archive of the specified path
             create_backup(path_to_backup, backup_path)
@@ -221,7 +227,9 @@ def main() -> None:
     rmtree(temp_dir)
 
     # Send a message that the backup process has completed
-    telegram_send_message(message=f"Backup from server {HOSTNAME}: {IP} from path: {DIR_PATH} in {start_time} to {end_time}.")
+    telegram_send_message(
+        message=f"Backup from server {HOSTNAME}: {IP} from path: {DIR_PATH} in {start_time} to {end_time}."
+    )
 
 
 if __name__ == "__main__":
