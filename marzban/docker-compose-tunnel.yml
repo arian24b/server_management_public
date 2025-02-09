@@ -1,0 +1,31 @@
+services:
+  marzban:
+    container_name: marzban
+    image: gozargah/marzban:latest
+    restart: always
+    env_file: .env
+    ports:
+      - "8443:8443"
+      - "2052:2052"
+      - "8448:8448"
+      - "2053:2053"
+      - "2087:2087"
+      - "2083:2083"
+      - "2096:2096"
+    volumes:
+      - ${HPATH}:${VPATH}
+    networks:
+      - marzban_network
+  tunnel:
+    depends_on:
+      - marzban
+    container_name: marzban_tunnel
+    image: cloudflare/cloudflared:latest
+    command: tunnel run
+    env_file: .env
+    restart: always
+    networks:
+      - marzban_network
+networks:
+  marzban_network:
+    driver: bridge
